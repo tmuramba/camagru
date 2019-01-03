@@ -1,0 +1,58 @@
+<html>
+<?php
+    session_start();
+    if (empty($_SESSION['username']))
+    {
+        header("location:../html/login.phtml");
+    }
+?>
+    <head>
+        <title>Camagru</title>
+        <link rel="stylesheet" type = "text/css" href = "../css/home.css">
+    </head>
+    <body>
+        <div class="header">
+            <h1>Camagru</h1>
+            <a href="home.phtml">Home</a>
+            <a href="gellery.phtml">Gallery</a>
+            <a href="webcam.phtml">Webcam</a>
+            <a href="profile.phtml">Profile</a>
+            <a href="../php/logout.php">logout</a>
+        </div>
+
+        <div id="imgs">
+
+        <?php
+        session_start();
+            $usr = $_SESSION['username'];
+
+            $servername = "localhost";
+            $username = "root";
+            $password = "123456";
+            $dbname = "Camagru";
+
+            try {
+                
+                $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+                $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        
+                $str = "SELECT * FROM images WHERE userid='$usr'";
+                $stmt = $conn->query($str);
+                while($res = $stmt->fetch())
+                {
+                    $fig = "<figure>";
+                    $im1 = "<img src='".$res['img_src']."'/>";
+                    $im2 = "<figcaption><form action='../php/delete.php' method='post'>
+                                <input type='hidden' name='date' value='".$res['reg_date']."'/>
+                                <input type='submit' value='DELETE'/></figcaption></figure>";
+                    echo $fig.$im1.$im2;
+                }
+            }
+            catch(PDOException $e)
+            {
+            echo $conn . "errorrorrorr <br/>" . $e->getMessage();
+            }
+        ?>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <title>Sign Up</title>
+        <link rel="stylesheet" type = "text/css" href = "../css/signup.css">
+    </head>
+    <body>
+        <h2>Camagru</h2>
+        <div class="login-box">
+            <img src="../avatar.png" class="avatar">
+            <h1>Sign Up</h1>
+            <form name="signup" action="../php/signup.php" method="POST">
+                <p>First Name</p>
+                <input type="text" name="firstname" placeholder="Enter First Name" required>
+                <p>Last Name</p>
+                <input type="text" name="lastname" placeholder="Enter Last Name" required>
+                <p>Username</p>
+                <input type="text" name="username" placeholder="Enter Username" required>
+                <p>Email</p>
+                <input type="email" name="email" placeholder="Enter Email Addres" required>
+                <p>Password</p>
+                <input type="password" name="password1" placeholder="Enter Password" required>
+                <p>Confirm Password</p>
+                <input type="password" name="password2" placeholder="Enter Password"required>
+                <input type="submit" name="submit" value="Sign Up!">
+            </form>
+        </div>
+    </body>
+</html>

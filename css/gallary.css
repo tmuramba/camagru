@@ -1,0 +1,51 @@
+body{
+    padding: 0;
+    margin: 0;
+    background: url(../image.jpg);
+    background-size: cover;
+}
+h1{
+    font-family: sans-serif;
+    font-size: 48px;
+    color: dimgrey;
+}
+
+h2{
+    font-family: serif;
+    text-align: center;
+    color: black;
+    border:red, solid;
+    font-size: 28px;
+}
+
+figure
+{
+    float : left;
+    text-align : center;
+    color : red;
+    min-width: 350px;
+    max-width: 460px;
+    margin: 15px;
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 rgba(10, 10, 10, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.box{
+    height: 40px;
+    width: 50%;
+}
+
+.button{
+    background-color: dodgerblue;
+    border: none;
+    height: 40px;
+    width: 30%;
+    color: white;
+    padding: 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}

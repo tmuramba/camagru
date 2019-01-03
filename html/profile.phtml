@@ -1,0 +1,41 @@
+<html>
+<?php
+    session_start();
+    if (empty($_SESSION['username']))
+    {
+        header("location:../html/login.phtml");
+    }
+?>
+    <head>
+        <title>Profile</title>
+        <link rel="stylesheet" type = "text/css" href = "../css/profile.css">
+    </head>
+    <body>
+        <h1>Camagru</h1>
+        <a href="home.phtml">Home</a>
+            <a href="gellery.phtml">Gallery</a>
+            <a href="webcam.phtml">Webcam</a>
+            <a href="profile.phtml">Profile</a>
+            <a href="../php/logout.php">logout</a>
+            <form name="mail" action="../php/mail.php" method="POST">
+                <input type="submit" name="mail" value="Mail">
+            </form>
+            <div class="login-box">
+                    <img src="../avatar.png" class="avatar">
+                    <h1>Update</h1>
+                    <form name="signup" action="../php/update.php" method="POST">
+                        <p>First Name</p>
+                        <input type="text" name="firstname" placeholder="Enter First Name">
+                        <p>Last Name</p>
+                        <input type="text" name="lastname" placeholder="Enter Last Name">
+                        <p>Username</p>
+                        <input type="text" name="username" placeholder="Enter Username">
+                        <p>Email</p>
+                        <input type="email" name="email" placeholder="Enter Email Addres">
+                        <p>Password</p>
+                        <input type="password" name="password" placeholder="Enter Password">
+                        <input type="submit" name="submit" value="Update!">
+                    </form>
+                </div>
+    </body>
+</html>

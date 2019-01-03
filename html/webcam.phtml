@@ -1,0 +1,83 @@
+<html>
+    <?php
+        session_start();
+        if (empty($_SESSION['username']))
+        {
+            header("location:../html/login.phtml");
+        }
+    ?>
+    <head>
+        <title>Booth</title>
+        <link rel="stylesheet" type = "text/css" href = "../css/webcam.css">
+    </head>
+    <body>
+        <h1>Camagru</h1>
+        <a href="home.phtml">Home</a>
+            <a href="gellery.phtml">Gallery</a>
+            <a href="webcam.phtml">Webcam</a>
+            <a href="profile.phtml">Profile</a>
+            <a href="../php/logout.php">logout</a>
+        <h2>Photo Booth</h2>
+        <div style="width:450px; height:375px; overflow: auto;">
+            <?php
+                session_start();
+                $servername = "localhost";
+                $username = "root";
+                $password = "123456";
+                $dbname = "Camagru";
+                $user = $_SESSION['username'];
+                try 
+                {
+                    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    $stmt = "SELECT * FROM images";
+                    $tmp = $conn->query($stmt);
+                    while( $row = $tmp->fetch())
+                    {
+                        if($row['userid'] === $user)
+                        {
+                            $fig = "<figure>";
+                            $img = "<img src=\"".$row['img_src']."\"/>";
+                            $cap = "<figcaption>".$row['img_title']."</figcaption>";
+                            $fi = "</figure>";
+                        }
+                        echo $fig.$img.$cap.$fi;
+                    }
+                }
+                catch(PDOException $e)
+                {
+                echo $conn . "errorrorrorr <br/>" . $e->getMessage();
+                }
+            ?>
+        </div>
+       <div class="booth">
+            <div id="imgVidDiv">
+                <img id="tmpImg" src=""  width="400" height="300" alt="">
+                <video id="video" width="400" height="300" autoplay="true"></video>
+            </div>
+           <canvas id="upload" width="400" height="300"></canvas>
+           <canvas id="filters" width="400" height="300"></canvas>
+           <div id="stickers">
+           <div>
+                <input type="file" onchange="encodeImageFileAsURL(this)" />
+            </div>
+               <button onclick="add_filter(0);"><img src="pika.png"/></button>
+               <button onclick="add_filter(1);"><img src="pik.png"/></button>
+               <button onclick="add_filter(2);"><img src="poop.png"/></button>
+           </div>
+           <button class="button" id="tkepic" onclick="snap();">Snap</button>
+       </div> 
+       <div class="image">
+       <canvas id="im" width="400" height="300"></canvas>
+       <form action="../php/save.php" method="POST">
+           <input type="hidden" name="img" id="img">
+           <input class="box" type="text" name="cap" placeholder="Add image caption">
+           <input class="button" type="submit" value="SAVE">
+        </form>
+       </div>
+    </body>
+    <footer>
+        &copy;tmuramba
+    </footer>
+    <script src="../js/photo.js"> </script>
+</html>

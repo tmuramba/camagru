@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>GALLERY</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="../css/gallary.css" />
+   
+</head>
+<body>
+    <h1>Camagru</h1>
+    <a href="home.phtml">Home</a>
+    <a href="gellery.phtml">Gallery</a>
+    <a href="webcam.phtml">Webcam</a>
+    <a href="profile.phtml">Profile</a>
+    <a href="../php/logout.php">logout</a>
+    <div class="photo">
+    <?php
+        session_start();
+        $servername = "localhost";
+        $username = "root";
+        $password = "123456";
+        $dbname = "Camagru";
+        $user = $_SESSION['username'];
+        try 
+        {
+            $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $stmt = "SELECT * FROM images";
+            $tmp = $conn->query($stmt);
+            while( $row = $tmp->fetch())
+            {
+                $fig = "<figure>";
+                $img = "<img src=\"".$row['img_src']."\"/>";
+                $cap = "<figcaption>".$row['img_title']."</figcaption>";
+                if(!empty($row['comments']))
+                {
+                    $cm = unserialize($row['comments']);
+                    foreach ($cm as $k => $v)
+                    {
+                        $ne .= $v."<br/>";
+                    }
+                }
+                $form = " <form action='../php/comments.php' method='POST'>
+                <input type='hidden' name='date' id='com' value='".$row['reg_date']."'>
+                <input class='box' type='text' name='com' placeholder='Comments' required>
+                <input class='button' type='submit' value='Comment'>
+                </form>";
+                $like = "<form action='../php/like.php' method='POST'>
+                            <input type='hidden' name='date' value='".$row['reg_date']."'>
+                            <input type='submit' value='likes : ".$row['likes']."'> </form>";
+                $fi = "</figure>";
+                echo $fig.$img.$cap.$ne.$form.$like.$fi;
+                $ne = null;
+            }
+        }
+        catch(PDOException $e)
+        {
+        echo $conn . "errorrorrorr <br/>" . $e->getMessage();
+        }
+    ?>
+    </div>
+
+</body>
+</html>
